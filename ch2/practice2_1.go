@@ -1,15 +1,18 @@
-package tempconv
+package main
 
-import "fmt"
+import (
+	"fmt"
+	"gobook/ch2/tempconv"
+)
 
 type KelvinScale float64
 
 func (k KelvinScale) String() string { return fmt.Sprintf("%g°K", k) }
 
-func CtoK(c Celsius) KelvinScale { return KelvinScale(c + AbsoluteZeroC) }
+func CtoK(c tempconv.Celsius) KelvinScale { return KelvinScale(c + tempconv.AbsoluteZeroC) }
 
-func KtoC(k KelvinScale) Celsius { return Celsius(k) - AbsoluteZeroC }
+func KtoC(k KelvinScale) tempconv.Celsius { return tempconv.Celsius(k) - tempconv.AbsoluteZeroC }
 
-func FtoK(f Fahrenheit) KelvinScale { return CtoK(FtoC(f)) }
+func FtoK(f tempconv.Fahrenheit) KelvinScale { return CtoK(tempconv.FtoC(f)) }
 
-func KtoF(k KelvinScale) Fahrenheit { return CtoF(KtoC(k)) }
+func KtoF(k KelvinScale) tempconv.Fahrenheit { return tempconv.CtoF(KtoC(k)) }

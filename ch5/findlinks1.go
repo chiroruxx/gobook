@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"gobook/ch5/findlinks1"
 	"golang.org/x/net/html"
 	"os"
 )
@@ -12,22 +13,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
 		os.Exit(1)
 	}
-	for _, link := range visit(nil, doc) {
+	for _, link := range findlinks1.Visit(nil, doc) {
 		fmt.Println(link)
 	}
-}
-
-func visit(links []string, n *html.Node) []string {
-	if n.Type == html.ElementNode && n.Data == "a" {
-		for _, a := range n.Attr {
-			if a.Key == "href" {
-				links = append(links, a.Val)
-			}
-		}
-	}
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		links = visit(links, c)
-	}
-
-	return links
 }

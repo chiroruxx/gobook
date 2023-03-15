@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"gobook/ch5/practice5_3"
 	"golang.org/x/net/html"
 	"os"
-	"strings"
 )
 
 func main() {
@@ -13,27 +13,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "findlinks1: %v\n", err)
 		os.Exit(1)
 	}
-	for _, text := range visit3(nil, doc) {
+	for _, text := range practice5_3.Visit(nil, doc) {
 		fmt.Println(text)
 	}
-}
-
-func visit3(texts []string, n *html.Node) []string {
-	if n.Type == html.TextNode {
-		text := strings.TrimSpace(n.Data)
-		if text != "" {
-			texts = append(texts, text)
-		}
-	}
-
-	if n.Data != "script" && n.Data != "style" {
-		if n.FirstChild != nil {
-			texts = visit3(texts, n.FirstChild)
-		}
-	}
-	if n.NextSibling != nil {
-		texts = visit3(texts, n.NextSibling)
-	}
-
-	return texts
 }

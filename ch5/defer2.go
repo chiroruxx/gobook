@@ -1,20 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"gobook/ch5/defer1"
 	"os"
 	"runtime"
 )
 
 func main() {
 	defer printStack()
-	f2(3)
-}
-
-func f2(x int) {
-	fmt.Printf("f(%d)\n", x+0/x)
-	defer fmt.Printf("defer %d\n", x)
-	f2(x - 1)
+	defer1.F(3)
 }
 
 func printStack() {

@@ -1,52 +1,9 @@
 package main
 
 import (
-	"fmt"
-	"golang.org/x/net/html"
-	"net/http"
-	"strings"
+	"gobook/ch5/title2"
 )
 
-func title2(url string) error {
-	resp, err := http.Get(url)
-	if err != nil {
-		return err
-	}
-	defer resp.Body.Close()
-
-	if ct := resp.Header.Get("Content-Type"); ct != "text/html" && !strings.HasPrefix(ct, "text/html;") {
-		return fmt.Errorf("%s has %s, not text/html", url, ct)
-	}
-
-	doc, err := html.Parse(resp.Body)
-	if err != nil {
-		return fmt.Errorf("parsing %s as HTML: %v", url, err)
-	}
-
-	visitNode := func(n *html.Node) {
-		if n.Type == html.ElementNode && n.Data == "title" && n.FirstChild != nil {
-			fmt.Println(n.FirstChild.Data)
-		}
-	}
-	forEachNode8(doc, visitNode, nil)
-
-	return nil
-}
-
-func forEachNode8(n *html.Node, pre, post func(n *html.Node)) {
-	if pre != nil {
-		pre(n)
-	}
-
-	for c := n.FirstChild; c != nil; c = c.NextSibling {
-		forEachNode8(c, pre, post)
-	}
-
-	if post != nil {
-		post(n)
-	}
-}
-
 func main() {
-	title2("https://go.dev/")
+	title2.Title("https://go.dev/")
 }

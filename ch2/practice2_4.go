@@ -1,27 +1,15 @@
-// package popcount
 package main
 
 import (
 	"fmt"
+	"gobook/ch2/practice2_4"
 	"os"
 	"strconv"
 )
 
-func PopCount(x uint64) int {
-	count := 0
-	for i := 0; i < 64; i++ {
-		value := x >> i
-		if value%2 == 1 {
-			count++
-		}
-	}
-
-	return count
-}
-
 func main() {
 	value, _ := strconv.ParseUint(os.Args[1], 10, 64)
-	count := PopCount(value)
+	count := practice2_4.PopCount(value)
 
 	fmt.Println(count)
 }

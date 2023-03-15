@@ -2,39 +2,24 @@ package main
 
 import (
 	"fmt"
+	"gobook/ch6/coloredpoint"
+	"gobook/ch6/geometry"
 	"image/color"
-	"math"
 )
 
-type Point2 struct{ X, Y float64 }
-
-func (p *Point2) Distance(q Point2) float64 {
-	return math.Hypot(q.X-p.X, q.Y-p.Y)
-}
-
-func (p *Point2) ScaleBy(factor float64) {
-	p.X *= factor
-	p.Y *= factor
-}
-
-type ColoredPoint struct {
-	Point2
-	Color color.RGBA
-}
-
 func main() {
-	var cp ColoredPoint
+	var cp coloredpoint.ColoredPoint
 	cp.X = 1
-	fmt.Println(cp.Point2.X)
-	cp.Point2.Y = 2
+	fmt.Println(cp.Point.X)
+	cp.Point.Y = 2
 	fmt.Println(cp.Y)
 
 	red := color.RGBA{R: 255, A: 255}
 	blue := color.RGBA{B: 255, A: 255}
-	var p = ColoredPoint{Point2{1, 1}, red}
-	var q = ColoredPoint{Point2{5, 4}, blue}
-	fmt.Println(p.Distance(q.Point2))
+	var p = coloredpoint.ColoredPoint{Point: coloredpoint.Point{Point: geometry.Point{X: 1, Y: 1}}, Color: red}
+	var q = coloredpoint.ColoredPoint{Point: coloredpoint.Point{Point: geometry.Point{X: 5, Y: 4}}, Color: blue}
+	fmt.Println(p.Distance(q.Point))
 	p.ScaleBy(2)
 	q.ScaleBy(2)
-	fmt.Println(p.Distance(q.Point2))
+	fmt.Println(p.Distance(q.Point))
 }

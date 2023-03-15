@@ -8,6 +8,8 @@ import (
 	"net/http"
 )
 
+import sflib "gobook/ch3/surface"
+
 func parseAndCheck(s string) (eval.Expr, error) {
 	if s == "" {
 		fmt.Println("err", s)
@@ -43,23 +45,12 @@ func Plot(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-const (
-	width, height = 600, 320
-	cells         = 100
-	xyRange       = 30.0
-	xyScale       = width / 2 / xyRange
-	zScale        = height * 0.4
-	angle         = math.Pi / 6
-)
-
-var sin30, cos30 = math.Sin(angle), math.Cos(angle)
-
 func surface(w io.Writer, f func(x, y float64) float64) {
 	fmt.Fprintf(w, "<svg xmlns='http://www.w3.org/2000/svg' "+
 		"style='stroke: gray; fill: white; stroke-width: 0.7' "+
-		"width='%d' height='%d'>\n", width, height)
-	for i := 0; i < cells; i++ {
-		for j := 0; j < cells; j++ {
+		"width='%d' height='%d'>\n", sflib.Width, sflib.Height)
+	for i := 0; i < sflib.Cells; i++ {
+		for j := 0; j < sflib.Cells; j++ {
 			ax, ay := corner(i+1, j, f)
 			bx, by := corner(i, j, f)
 			cx, cy := corner(i, j+1, f)
@@ -72,12 +63,12 @@ func surface(w io.Writer, f func(x, y float64) float64) {
 }
 
 func corner(i, j int, f func(x, y float64) float64) (float64, float64) {
-	x := xyRange * (float64(i)/cells - 0.5)
-	y := xyRange * (float64(j)/cells - 0.5)
+	x := sflib.XyRange * (float64(i)/sflib.Cells - 0.5)
+	y := sflib.XyRange * (float64(j)/sflib.Cells - 0.5)
 
 	z := f(x, y)
 
-	sx := width/2 + (x-y)*cos30*xyScale
-	sy := height/2 + (x+y)*sin30*xyScale - z*zScale
+	sx := sflib.Width/2 + (x-y)*sflib.Cos30*sflib.XyScale
+	sy := sflib.Height/2 + (x+y)*sflib.Sin30*sflib.XyScale - z*sflib.ZScale
 	return sx, sy
 }

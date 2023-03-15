@@ -26,12 +26,12 @@ func main() {
 	if err := report.Execute(os.Stdout, result); err != nil {
 		log.Fatal(err)
 	}
-	//report, err := template.New("report").
-	//	Funcs(template.FuncMap{"daysAgo": daysAgo}).
-	//	Parse(templ)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	_, err = template.New("report").
+		Funcs(template.FuncMap{"daysAgo": daysAgo}).
+		Parse(templ)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }
 

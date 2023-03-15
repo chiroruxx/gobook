@@ -7,7 +7,7 @@ import (
 	"os"
 )
 
-const issueList = template.Must(template.New("issuelist").Parse(`
+var issueList = template.Must(template.New("issuelist").Parse(`
 	<h1>{{.TotalCount}} issues</h1>
     <table>
 		<tr style='text-align: left'>
@@ -35,11 +35,10 @@ func main() {
 	if err := report.Execute(os.Stdout, result); err != nil {
 		log.Fatal(err)
 	}
-	//report, err := template.New("report").
-	//	Funcs(template.FuncMap{"daysAgo": daysAgo}).
-	//	Parse(templ)
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
-
+	_, err = template.New("report").
+		Funcs(template.FuncMap{"daysAgo": daysAgo}).
+		Parse(templ)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
