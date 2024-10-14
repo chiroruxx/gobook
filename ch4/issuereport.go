@@ -1,11 +1,12 @@
 package main
 
 import (
-	"gobook/github"
 	"log"
 	"os"
 	"text/template"
 	"time"
+
+	"gobook/github"
 )
 
 const templ = `{{.TotalCount}} issues

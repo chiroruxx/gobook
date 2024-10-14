@@ -1,10 +1,11 @@
 package main
 
 import (
-	"gobook/github"
 	"html/template"
 	"log"
 	"os"
+
+	"gobook/github"
 )
 
 var issueList = template.Must(template.New("issuelist").Parse(`
